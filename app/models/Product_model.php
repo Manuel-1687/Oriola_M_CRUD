@@ -40,6 +40,6 @@ class Product_model extends Model
 
     public function find_product($id)
     {
-        return $this->db->table($this->table)->where('id', (int) $id)->get()->row_array();
+        return $this->db->table($this->table)->where('id', (int) $id)->get();
     }
 }
