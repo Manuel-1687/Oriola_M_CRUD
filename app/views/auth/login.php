@@ -17,9 +17,9 @@
     <?php if (!empty($error)): ?><div class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
     <form method="post" action="<?= site_url('/login') ?>">
         <label for="username">Username</label>
-        <input id="username" name="username" type="text" autocomplete="username" required>
+        <input id="username" name="username" type="text" value="admin" autocomplete="username" required>
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <input id="password" name="password" type="password" value="admin" autocomplete="current-password" required>
         <button type="submit">Sign in</button>
     </form>
 </main>
