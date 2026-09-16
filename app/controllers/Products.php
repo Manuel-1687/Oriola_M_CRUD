@@ -44,27 +44,43 @@ class Products extends Controller
 
     public function edit($id)
     {
-        $this->call->model('Product_model', 'product');
-        $product = $this->product->find_product($id);
-        if (!$product) {
-            show_404('Product not found');
+        try {
+            $this->call->model('Product_model', 'product');
+            $product = $this->product->find_product((int) $id);
+            if (!$product) {
+                show_404('Product not found');
+            }
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
+            $this->session->set_flashdata('message', 'Unable to load this product. Check the database connection.');
+            redirect('/products');
         }
         $this->call->view('products/form', ['product' => $product, 'form_action' => '/products/update/' . (int) $id]);
     }
 
     public function update($id)
     {
-        $this->call->model('Product_model', 'product');
-        $this->product->update((int) $id, $this->product_data());
-        $this->session->set_flashdata('message', 'Product updated successfully.');
+        try {
+            $this->call->model('Product_model', 'product');
+            $updated = $this->product->update((int) $id, $this->product_data());
+            $this->session->set_flashdata('message', $updated ? 'Product updated successfully.' : 'No product was updated.');
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
+            $this->session->set_flashdata('message', 'Product update failed. Check the database connection.');
+        }
         redirect('/products');
     }
 
     public function delete($id)
     {
-        $this->call->model('Product_model', 'product');
-        $this->product->delete((int) $id);
-        $this->session->set_flashdata('message', 'Product deleted successfully.');
+        try {
+            $this->call->model('Product_model', 'product');
+            $deleted = $this->product->delete((int) $id);
+            $this->session->set_flashdata('message', $deleted ? 'Product deleted successfully.' : 'No product was deleted.');
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
+            $this->session->set_flashdata('message', 'Product deletion failed. Check the database connection.');
+        }
         redirect('/products');
     }
 
