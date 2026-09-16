@@ -12,10 +12,20 @@ class Products extends Controller
 
     public function index()
     {
-        $this->call->model('Product_model', 'product');
+        try {
+            $this->call->model('Product_model', 'product');
+            $products = $this->product->all_products();
+            $database_error = null;
+        } catch (Throwable $exception) {
+            $products = [];
+            $database_error = 'Database connection failed. Check the Render Aiven environment variables.';
+            error_log($exception->getMessage());
+        }
+
         $this->call->view('products/index', [
-            'products' => $this->product->all_products(),
+            'products' => $products,
             'message' => $this->session->flashdata('message'),
+            'database_error' => $database_error,
         ]);
     }
 

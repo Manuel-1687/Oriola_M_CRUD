@@ -14,6 +14,7 @@
     <header class="top"><div><div class="tag">Authenticated workspace</div><div class="brand">Product Desk</div></div><div class="actions"><a class="primary" href="<?= site_url('/products/create') ?>">+ Add product</a><form method="post" action="<?= site_url('/logout') ?>"><button class="logout" type="submit">Log out</button></form></div></header>
     <section class="intro"><div><h1>Inventory</h1><p>Track every product in your catalog.</p></div></section>
     <?php if (!empty($message)): ?><div class="notice"><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
+    <?php if (!empty($database_error)): ?><div class="notice" style="background:#fbe3dc;color:#9d3219"><?= htmlspecialchars($database_error, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
     <table>
         <thead><tr><th>Product</th><th>Description</th><th>Price</th><th>Quantity</th><th>Created</th><th>Actions</th></tr></thead>
         <tbody>
