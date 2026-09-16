@@ -69,7 +69,7 @@ by the session and is available at `/products` after login.
 2. Create a Render Web Service from this repository. Render will use the included `Dockerfile`.
 3. Set these Render environment variables from the Aiven connection details: `DB_HOST`, `DB_PORT`,
    `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `APP_KEY`, and `APP_URL`.
-4. Keep `APP_ENV=production`, `DB_DRIVER=mysql`, and `DB_CHARSET=utf8mb4`.
+4. Use `DB_PORT=18677`, `DB_NAME=defaultdb`, `APP_ENV=production`, `DB_DRIVER=mysql`, and `DB_CHARSET=utf8mb4`.
 
 Database passwords are intentionally excluded from Git. The included `render.yaml` can be used
 as a deployment blueprint; values marked `sync: false` must be entered in Render.
