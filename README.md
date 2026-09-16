@@ -57,6 +57,31 @@ Configure your web server to point to the project root and ensure `mod_rewrite` 
 
 ---
 
+## Product Desk Deployment
+
+This application implements the laboratory CRUD activity with a static session login.
+Use `admin` as the username and `admin` as the password. Product management is protected
+by the session and is available at `/products` after login.
+
+### Render + Aiven
+
+1. Create the `products` table in Aiven using `app/migrations/003_create_products_table.php`.
+2. Create a Render Web Service from this repository. Render will use the included `Dockerfile`.
+3. Set these Render environment variables from the Aiven connection details: `DB_HOST`, `DB_PORT`,
+   `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `APP_KEY`, and `APP_URL`.
+4. Keep `APP_ENV=production`, `DB_DRIVER=mysql`, and `DB_CHARSET=utf8mb4`.
+
+Database passwords are intentionally excluded from Git. The included `render.yaml` can be used
+as a deployment blueprint; values marked `sync: false` must be entered in Render.
+
+### Required Routes
+
+- `/login` - static admin login
+- `/products` - authenticated product list
+- `/products/create` - add a product
+- `/products/edit/{id}` - edit a product
+- `/products/delete/{id}` - delete a product
+
 ## Quick Start
 
 ### 1. Define a Route
@@ -180,7 +205,7 @@ $database['main'] = array(
 **File:** `app/config/config.php`
 
 ```php
-$config['base_url'] = 'http://localhost:3000/';
+$config['base_url'] = getenv('APP_URL') ?: '';
 ```
 
 ---
